@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:resto/feature/resto/presentation/pages/detail/DetailRestaurantPage.dart';
+import 'package:resto/feature/resto/presentation/pages/detail/detail_restaurant_page.dart';
 import 'package:resto/feature/resto/presentation/pages/home/home_page.dart';
 
 const String HomePageRoute = '/';
