@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:resto/feature/resto/presentation/pages/home/home_page.dart';
 import 'package:resto/injection/injection.dart' as di;
+import 'package:resto/core/route/main_route.dart' as router;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +18,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: HomePage(),
+      onGenerateRoute: router.generateRoute,
+      initialRoute: router.HomePageRoute,
     );
   }
 }
