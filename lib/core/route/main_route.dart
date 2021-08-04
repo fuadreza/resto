@@ -26,3 +26,7 @@ void goToScreen(BuildContext context, String route, {dynamic arguments}){
     Navigator.pushNamed(context, route);
   }
 }
+
+void goBack(BuildContext context){
+  Navigator.pop(context);
+}
