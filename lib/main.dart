@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:resto/feature/resto/presentation/pages/home/home_page.dart';
+import 'package:resto/injection/injection.dart' as di;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
   runApp(MyApp());
 }
 
