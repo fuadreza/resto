@@ -10,7 +10,11 @@ class RestaurantCubit extends Cubit<RestaurantState> {
 
   Future<void> getRestaurants() async {
     emit(Loading());
-    final restaurants = await getRestaurantsUseCase.invoke(NoParams());
-    emit(Loaded(restaurants: restaurants));
+    try {
+      final restaurants = await getRestaurantsUseCase.invoke(NoParams());
+      emit(Loaded(restaurants: restaurants));
+    } on Exception {
+      emit(Error(message: 'Failed to load restaurant list'));
+    }
   }
 }

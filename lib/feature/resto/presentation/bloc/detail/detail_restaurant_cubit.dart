@@ -9,7 +9,11 @@ class DetailRestaurantCubit extends Cubit<DetailRestaurantState> {
 
   Future<void> getDetailRestaurant(String restaurantId) async {
     emit(Loading());
-    final detailRestaurant = await getDetailRestaurantUseCase.invoke(restaurantId);
-    emit(Loaded(detailRestaurant: detailRestaurant));
+    try {
+      final detailRestaurant = await getDetailRestaurantUseCase.invoke('restaurantId');
+      emit(Loaded(detailRestaurant: detailRestaurant));
+    } on Exception {
+      emit(Error(message: 'Failed load detail restaurant'));
+    }
   }
 }

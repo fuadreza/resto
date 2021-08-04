@@ -72,6 +72,10 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 );
+              } else if (state is Error) {
+                return Center(
+                  child: Text('Error: ${state.message}'),
+                );
               } else {
                 return Center(
                   child: Text('Empty'),

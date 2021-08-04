@@ -10,6 +10,15 @@ class Init extends DetailRestaurantState {}
 
 class Loading extends DetailRestaurantState {}
 
+class Error extends DetailRestaurantState {
+  final String message;
+
+  Error({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}
+
 class Loaded extends DetailRestaurantState {
   final DetailRestaurant detailRestaurant;
 

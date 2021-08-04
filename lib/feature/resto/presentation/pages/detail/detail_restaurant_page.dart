@@ -30,6 +30,10 @@ class DetailRestaurantPage extends StatelessWidget {
                 return Center(
                   child: Text('Data: ${state.detailRestaurant}'),
                 );
+              } else if (state is Error) {
+                return Center(
+                  child: Text('Error: ${state.message}'),
+                );
               } else {
                 return Center(
                   child: Text('Empty'),
