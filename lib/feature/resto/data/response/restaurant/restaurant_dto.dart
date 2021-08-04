@@ -22,7 +22,7 @@ class RestaurantModel extends Restaurant {
   final String description;
   final String pictureId;
   final String city;
-  final double rating;
+  final num rating;
 
   RestaurantModel({
     required this.id,
