@@ -17,7 +17,9 @@ dependencies:
   # core
   flutter_bloc: ^7.1.0
   equatable: ^2.0.3
+  either_dart: ^0.1.2
   get_it: ^7.1.3
+  http: ^0.13.3
 
   # theme
   cupertino_icons: ^1.0.2
