@@ -9,6 +9,8 @@ class AppColors {
   static const grey = const Color(0xFFEEEEEE);
   static const darkGrey = const Color(0xFFCCCCCC);
 
+  static const danger = const Color(0xFFE56969);
+
   // Light
   static const primary = const Color(0xFFE22B2B);
   static const secondary = const Color(0xFF38C5D5);
