@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:resto/feature/resto/domain/entity/category/category.dart';
 import 'package:resto/feature/resto/domain/entity/menu/menu.dart';
+import 'package:resto/feature/resto/domain/entity/review/review.dart';
 
 class DetailRestaurant extends Equatable {
   final String id;
@@ -9,6 +11,8 @@ class DetailRestaurant extends Equatable {
   final String city;
   final num rating;
   final Menu menu;
+  final List<Category> categories;
+  final List<Review> reviews;
 
   DetailRestaurant({
     required this.id,
@@ -18,8 +22,10 @@ class DetailRestaurant extends Equatable {
     required this.city,
     required this.rating,
     required this.menu,
+    required this.categories,
+    required this.reviews,
   });
 
   @override
-  List<Object> get props => [id, name, description, pictureId, city, rating, menu];
+  List<Object> get props => [id, name, description, pictureId, city, rating, menu, categories, reviews];
 }

@@ -1,7 +1,9 @@
+import 'package:resto/feature/resto/domain/entity/category/category.dart';
 import 'package:resto/feature/resto/domain/entity/menu/drink.dart';
 import 'package:resto/feature/resto/domain/entity/menu/food.dart';
 import 'package:resto/feature/resto/domain/entity/menu/menu.dart';
 import 'package:resto/feature/resto/domain/entity/restaurant/detail_restaurant.dart';
+import 'package:resto/feature/resto/domain/entity/review/review.dart';
 
 class LocalDetailRestaurantDto {
   final List<DetailRestaurant> restaurants;
@@ -28,6 +30,8 @@ class DetailRestaurantModel extends DetailRestaurant {
   final String city;
   final num rating;
   final Menu menu;
+  final List<Category> categories;
+  final List<Review> reviews;
 
   DetailRestaurantModel({
     required this.id,
@@ -37,6 +41,8 @@ class DetailRestaurantModel extends DetailRestaurant {
     required this.city,
     required this.rating,
     required this.menu,
+    required this.categories,
+    required this.reviews,
   }) : super(
           id: id,
           name: name,
@@ -45,6 +51,8 @@ class DetailRestaurantModel extends DetailRestaurant {
           city: city,
           rating: rating,
           menu: menu,
+          categories: categories,
+          reviews: reviews,
         );
 
   factory DetailRestaurantModel.fromJson(Map<String, dynamic> json) {
@@ -56,6 +64,8 @@ class DetailRestaurantModel extends DetailRestaurant {
       city: json['city'],
       rating: json['rating'],
       menu: MenuModel.toMenu(MenuModel.fromJson(json['menus'])),
+      categories: [],
+      reviews: [],
     );
   }
 
@@ -68,6 +78,8 @@ class DetailRestaurantModel extends DetailRestaurant {
       city: model.city,
       rating: model.rating,
       menu: model.menu,
+      categories: model.categories,
+      reviews: model.reviews,
     );
   }
 }
