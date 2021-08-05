@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/feature/resto/domain/entity/restaurant/restaurant.dart';
 
 class ItemRestaurant extends StatelessWidget {
@@ -21,6 +22,16 @@ class ItemRestaurant extends StatelessWidget {
               width: 100,
               height: 100,
               fit: BoxFit.cover,
+              errorBuilder: (_, error, stackTrace){
+                return Container(
+                  width: 100,
+                  height: 100,
+                  color: AppColors.secondary,
+                  child: Center(
+                    child: Icon(Icons.restaurant),
+                  ),
+                );
+              },
             ),
           ),
           SizedBox(width: 8,),

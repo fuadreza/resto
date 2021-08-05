@@ -47,7 +47,7 @@ class RestaurantModel extends Restaurant {
   }
 
   static Restaurant toRestaurant(RestaurantModel dto) {
-    final pictureUrl = 'https://restaurant-api.dicoding.dev/images/small/';
+    final pictureUrl = 'https://restaurant-api.dicoding.dev/images/medium/';
     return Restaurant(
       id: dto.id,
       name: dto.name,

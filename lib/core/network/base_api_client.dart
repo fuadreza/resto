@@ -17,16 +17,20 @@ class BaseApiClient {
             ? Uri.https(baseUrl, url, params)
             : Uri.https(baseUrl, url + path, params);
 
-    final response = await client.get(
-      uri,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
+    try {
+      final response = await client.get(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
 
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        throw ServerException();
+      }
+    } on Exception {
       throw ServerException();
     }
   }
