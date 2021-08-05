@@ -46,19 +46,22 @@ class DetailRestaurantPage extends StatelessWidget {
                               bottomLeft: Radius.circular(10),
                               bottomRight: Radius.circular(10),
                             ),
-                            child: Image.network(
-                              state.detailRestaurant.pictureId,
-                              fit: BoxFit.cover,
-                              errorBuilder: (_, error, stackTrace) {
-                                return Container(
-                                  width: double.infinity,
-                                  height: 200,
-                                  color: AppColors.secondary,
-                                  child: Center(
-                                    child: Icon(Icons.restaurant),
-                                  ),
-                                );
-                              },
+                            child: Hero(
+                              tag: state.detailRestaurant.pictureId,
+                              child: Image.network(
+                                state.detailRestaurant.pictureId,
+                                fit: BoxFit.cover,
+                                errorBuilder: (_, error, stackTrace) {
+                                  return Container(
+                                    width: double.infinity,
+                                    height: 200,
+                                    color: AppColors.secondary,
+                                    child: Center(
+                                      child: Icon(Icons.restaurant),
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           ),
                           Positioned(

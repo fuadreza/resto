@@ -17,21 +17,24 @@ class ItemRestaurant extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Image.network(
-              restaurant.pictureId,
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
-              errorBuilder: (_, error, stackTrace){
-                return Container(
-                  width: 100,
-                  height: 100,
-                  color: AppColors.secondary,
-                  child: Center(
-                    child: Icon(Icons.restaurant),
-                  ),
-                );
-              },
+            child: Hero(
+              tag: restaurant.pictureId,
+              child: Image.network(
+                restaurant.pictureId,
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+                errorBuilder: (_, error, stackTrace){
+                  return Container(
+                    width: 100,
+                    height: 100,
+                    color: AppColors.secondary,
+                    child: Center(
+                      child: Icon(Icons.restaurant),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
           SizedBox(width: 8,),
