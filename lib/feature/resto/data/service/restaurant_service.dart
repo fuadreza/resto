@@ -9,4 +9,9 @@ class RestaurantService {
     final url = '/list';
     return apiClient.get(url: url);
   }
+
+  Future<String> getDetailRestaurant(String restaurantId) async {
+    final url = '/detail/$restaurantId';
+    return apiClient.get(url: url);
+  }
 }

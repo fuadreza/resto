@@ -1,4 +1,3 @@
-import 'package:resto/core/error/exceptions.dart';
 import 'package:resto/core/error/failures.dart';
 import 'package:resto/feature/resto/data/source/local/restaurant_local_data_source.dart';
 import 'package:resto/feature/resto/data/source/remote/restaurant_remote_data_source.dart';
@@ -18,17 +17,18 @@ class RestaurantRepositoryImpl implements RestaurantRepository {
   @override
   Future<List<Restaurant>> getRestaurants() async {
     try {
-      final result = await remoteDataSource.getRestaurants();
-      return result;
+      return await remoteDataSource.getRestaurants();
     } on ServerFailure {
-      final result = await localDataSource.getRestaurants();
-      return result;
+      return await localDataSource.getRestaurants();
     }
   }
 
   @override
   Future<DetailRestaurant> getDetailRestaurant(String restaurantId) async {
-    final result = await localDataSource.getDetailRestaurant(restaurantId);
-    return result;
+    try {
+      return await remoteDataSource.getDetailRestaurant(restaurantId);
+    } on ServerFailure {
+      return await localDataSource.getDetailRestaurant(restaurantId);
+    }
   }
 }
