@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resto/core/route/main_route.dart';
+import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/feature/resto/presentation/bloc/restaurant/restaurant_cubit.dart';
 import 'package:resto/feature/resto/presentation/bloc/restaurant/restaurant_state.dart';
 import 'package:resto/feature/resto/presentation/widgets/item_restaurant.dart';
@@ -84,6 +85,16 @@ class HomePage extends StatelessWidget {
             },
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          goToScreen(_context, SearchRestaurantPageRoute);
+        },
+        child: Icon(
+          Icons.search,
+          color: AppColors.black,
+        ),
+        backgroundColor: AppColors.white,
       ),
     );
   }
