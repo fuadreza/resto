@@ -31,4 +31,13 @@ class RestaurantRepositoryImpl implements RestaurantRepository {
       return await localDataSource.getDetailRestaurant(restaurantId);
     }
   }
+
+  @override
+  Future<List<Restaurant>> searchRestaurant(String keyword) async {
+    try {
+      return await remoteDataSource.searchRestaurant(keyword);
+    } on ServerFailure {
+      return await localDataSource.searchRestaurant(keyword);
+    }
+  }
 }

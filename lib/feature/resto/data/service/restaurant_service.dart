@@ -14,4 +14,12 @@ class RestaurantService {
     final url = '/detail/$restaurantId';
     return apiClient.get(url: url);
   }
+
+  Future<String> searchRestaurant(String keyword) async {
+    final url = '/search';
+    final param = {
+      'q': keyword
+    };
+    return apiClient.get(url: url, params: param);
+  }
 }

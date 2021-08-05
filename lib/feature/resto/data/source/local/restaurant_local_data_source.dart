@@ -10,6 +10,8 @@ abstract class RestaurantLocalDataSource {
   Future<List<Restaurant>> getRestaurants();
 
   Future<DetailRestaurant> getDetailRestaurant(String restaurantId);
+
+  Future<List<Restaurant>> searchRestaurant(String keyword);
 }
 
 class RestaurantLocalDataSourceImpl implements RestaurantLocalDataSource {
@@ -38,5 +40,17 @@ class RestaurantLocalDataSourceImpl implements RestaurantLocalDataSource {
 
   Future<String> getJson() async {
     return await rootBundle.loadString('assets/local_restaurant.json');
+  }
+
+  @override
+  Future<List<Restaurant>> searchRestaurant(String keyword) async {
+    final localJson = json.decode(await getJson());
+    final dto = LocalRestaurantDto.fromJson(localJson);
+    try {
+      var filteredItem = dto.restaurants.where((item) => item.name == keyword).toList();
+      return filteredItem;
+    } on RangeError {
+      throw Exception();
+    }
   }
 }

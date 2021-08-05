@@ -12,6 +12,8 @@ abstract class RestaurantRemoteDataSource {
   Future<List<Restaurant>> getRestaurants();
 
   Future<DetailRestaurant> getDetailRestaurant(String restaurantId);
+
+  Future<List<Restaurant>> searchRestaurant(String keyword);
 }
 
 class RestaurantRemoteDataSourceImpl implements RestaurantRemoteDataSource {
@@ -37,6 +39,17 @@ class RestaurantRemoteDataSourceImpl implements RestaurantRemoteDataSource {
       final dto = DetailRestaurantDto.fromJson(jsonDecode(response)['restaurant']);
       return dto;
     } on ServerException {
+      throw ServerFailure();
+    }
+  }
+
+  @override
+  Future<List<Restaurant>> searchRestaurant(String keyword) async {
+    try {
+      final response = await restaurantService.searchRestaurant(keyword);
+      final dto = RestaurantDto.fromJson(jsonDecode(response));
+      return dto.restaurants;
+    }on ServerException {
       throw ServerFailure();
     }
   }
