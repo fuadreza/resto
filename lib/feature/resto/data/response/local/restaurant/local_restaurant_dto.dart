@@ -1,12 +1,12 @@
 import 'package:resto/feature/resto/domain/entity/restaurant/restaurant.dart';
 
-class RestaurantDto {
+class LocalRestaurantDto {
   final List<Restaurant> restaurants;
 
-  RestaurantDto({required this.restaurants});
+  LocalRestaurantDto({required this.restaurants});
 
-  factory RestaurantDto.fromJson(Map<String, dynamic> json) {
-    return RestaurantDto(restaurants: parseRestaurants(json['restaurants']));
+  factory LocalRestaurantDto.fromJson(Map<String, dynamic> json) {
+    return LocalRestaurantDto(restaurants: parseRestaurants(json['restaurants']));
   }
 
   static List<Restaurant> parseRestaurants(json){

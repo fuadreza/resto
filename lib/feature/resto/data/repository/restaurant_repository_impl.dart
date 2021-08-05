@@ -1,4 +1,3 @@
-import 'package:resto/feature/resto/data/response/restaurant/restaurant_dto.dart';
 import 'package:resto/feature/resto/data/source/local/restaurant_local_data_source.dart';
 import 'package:resto/feature/resto/domain/entity/restaurant/detail_restaurant.dart';
 import 'package:resto/feature/resto/domain/entity/restaurant/restaurant.dart';
@@ -11,8 +10,8 @@ class RestaurantRepositoryImpl implements RestaurantRepository {
 
   @override
   Future<List<Restaurant>> getRestaurants() async {
-    final RestaurantDto result = await localDataSource.getRestaurants();
-    return result.restaurants;
+    final result = await localDataSource.getRestaurants();
+    return result;
   }
 
   @override
