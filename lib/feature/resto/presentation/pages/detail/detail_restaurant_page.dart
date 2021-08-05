@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resto/core/route/main_route.dart';
+import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/feature/resto/presentation/bloc/detail/detail_restaurant_cubit.dart';
 import 'package:resto/feature/resto/presentation/bloc/detail/detail_restaurant_state.dart';
 import 'package:resto/feature/resto/presentation/widgets/item_menu.dart';
+import 'package:resto/feature/resto/presentation/widgets/item_review.dart';
 import 'package:resto/injection/injection.dart';
 
 class DetailRestaurantPage extends StatelessWidget {
@@ -47,6 +49,16 @@ class DetailRestaurantPage extends StatelessWidget {
                             child: Image.network(
                               state.detailRestaurant.pictureId,
                               fit: BoxFit.cover,
+                              errorBuilder: (_, error, stackTrace) {
+                                return Container(
+                                  width: double.infinity,
+                                  height: 200,
+                                  color: AppColors.secondary,
+                                  child: Center(
+                                    child: Icon(Icons.restaurant),
+                                  ),
+                                );
+                              },
                             ),
                           ),
                           Positioned(
@@ -81,6 +93,36 @@ class DetailRestaurantPage extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 20),
                         child: Text('📍 ${state.detailRestaurant.city}'),
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          'Categories',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 40,
+                        margin: EdgeInsets.only(left: 20),
+                        child: state.detailRestaurant.categories.length != 0
+                            ? ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: state.detailRestaurant.categories.length,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    margin: EdgeInsets.only(right: 4),
+                                    child: Chip(
+                                      label: Text(state.detailRestaurant.categories[index].name),
+                                    ),
+                                  );
+                                },
+                              )
+                            : Text('Undefined'),
                       ),
                       SizedBox(height: 20),
                       Container(
@@ -152,6 +194,31 @@ class DetailRestaurantPage extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return ItemMenu(
                               menuName: state.detailRestaurant.menu.drinks[index].name,
+                            );
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          'Reviews',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 20),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: state.detailRestaurant.reviews.length,
+                          itemBuilder: (context, index) {
+                            return ItemReview(
+                              review: state.detailRestaurant.reviews[index],
                             );
                           },
                         ),
