@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:resto/core/route/main_route.dart' as router;
+import 'package:resto/core/theme/custom_theme.dart';
 import 'package:resto/feature/resto/presentation/pages/home/home_page.dart';
 import 'package:resto/injection/injection.dart' as di;
-import 'package:resto/core/route/main_route.dart' as router;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,13 +12,15 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final brightness = SchedulerBinding.instance?.window.platformBrightness;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Resto',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      darkTheme: CustomTheme().dark,
+      theme: CustomTheme().light,
+      themeMode: brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light,
       home: HomePage(),
       onGenerateRoute: router.generateRoute,
       initialRoute: router.HomePageRoute,
