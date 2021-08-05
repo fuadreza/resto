@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:http/http.dart' as http;
 import 'package:resto/core/network/base_api_client.dart';
 import 'package:resto/feature/resto/data/repository/restaurant_repository_impl.dart';
 import 'package:resto/feature/resto/data/service/restaurant_service.dart';
@@ -7,9 +8,10 @@ import 'package:resto/feature/resto/data/source/remote/restaurant_remote_data_so
 import 'package:resto/feature/resto/domain/repository/restaurant_repository.dart';
 import 'package:resto/feature/resto/domain/usecase/get_detail_restaurant_use_case.dart';
 import 'package:resto/feature/resto/domain/usecase/get_restaurants_use_case.dart';
+import 'package:resto/feature/resto/domain/usecase/search_restaurant_use_case.dart';
 import 'package:resto/feature/resto/presentation/bloc/detail/detail_restaurant_cubit.dart';
 import 'package:resto/feature/resto/presentation/bloc/restaurant/restaurant_cubit.dart';
-import 'package:http/http.dart' as http;
+import 'package:resto/feature/resto/presentation/bloc/search/search_restaurant_cubit.dart';
 
 final di = GetIt.instance;
 
@@ -26,6 +28,11 @@ Future<void> init() async {
       getDetailRestaurantUseCase: di(),
     ),
   );
+  di.registerFactory(
+    () => SearchRestaurantCubit(
+      searchRestaurantUseCase: di(),
+    ),
+  );
 
   // Use cases
   di.registerLazySingleton(
@@ -35,6 +42,11 @@ Future<void> init() async {
   );
   di.registerLazySingleton(
     () => GetDetailRestaurantUseCase(
+      repository: di(),
+    ),
+  );
+  di.registerLazySingleton(
+    () => SearchRestaurantUseCase(
       repository: di(),
     ),
   );

@@ -9,7 +9,7 @@ class RestaurantDto {
   factory RestaurantDto.fromJson(Map<String, dynamic> json) {
     return RestaurantDto(
       restaurants: parseRestaurants(json['restaurants']),
-      count: json['count']
+      count: json['count'] != null ? json['count'] : 0,
     );
   }
 
