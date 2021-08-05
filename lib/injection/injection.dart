@@ -1,11 +1,15 @@
 import 'package:get_it/get_it.dart';
+import 'package:resto/core/network/base_api_client.dart';
 import 'package:resto/feature/resto/data/repository/restaurant_repository_impl.dart';
+import 'package:resto/feature/resto/data/service/restaurant_service.dart';
 import 'package:resto/feature/resto/data/source/local/restaurant_local_data_source.dart';
+import 'package:resto/feature/resto/data/source/remote/restaurant_remote_data_source.dart';
 import 'package:resto/feature/resto/domain/repository/restaurant_repository.dart';
 import 'package:resto/feature/resto/domain/usecase/get_detail_restaurant_use_case.dart';
 import 'package:resto/feature/resto/domain/usecase/get_restaurants_use_case.dart';
 import 'package:resto/feature/resto/presentation/bloc/detail/detail_restaurant_cubit.dart';
 import 'package:resto/feature/resto/presentation/bloc/restaurant/restaurant_cubit.dart';
+import 'package:http/http.dart' as http;
 
 final di = GetIt.instance;
 
@@ -39,11 +43,37 @@ Future<void> init() async {
   di.registerLazySingleton<RestaurantRepository>(
     () => RestaurantRepositoryImpl(
       localDataSource: di(),
+      remoteDataSource: di(),
     ),
   );
 
   // Data sources
+  // Local
   di.registerLazySingleton<RestaurantLocalDataSource>(
     () => RestaurantLocalDataSourceImpl(),
   );
+
+  // Remote
+  di.registerLazySingleton<RestaurantRemoteDataSource>(
+    () => RestaurantRemoteDataSourceImpl(
+      restaurantService: di(),
+    ),
+  );
+
+  // Service
+  di.registerLazySingleton<RestaurantService>(
+    () => RestaurantService(
+      apiClient: di(),
+    ),
+  );
+
+  //! Core
+  di.registerLazySingleton<BaseApiClient>(
+    () => BaseApiClient(
+      client: di(),
+    ),
+  );
+
+  //! External
+  di.registerLazySingleton(() => http.Client());
 }
