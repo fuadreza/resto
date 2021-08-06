@@ -9,7 +9,7 @@ import 'package:resto/feature/resto/presentation/bloc/restaurant/restaurant_stat
 import 'package:resto/feature/resto/presentation/widgets/item_restaurant.dart';
 import 'package:resto/injection/injection.dart';
 
-class HomePage extends StatelessWidget {
+class RestaurantPage extends StatelessWidget {
   var _context;
 
   @override
