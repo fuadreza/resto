@@ -7,4 +7,8 @@ abstract class RestaurantRepository {
   Future<DetailRestaurant> getDetailRestaurant(String restaurantId);
 
   Future<List<Restaurant>> searchRestaurant(String keyword);
+
+  Future<List<Restaurant>> getFavoriteRestaurants();
+
+//Future<List<Restaurant>> setFavoriteRestaurants(DetailRestaurant restaurant);
 }
