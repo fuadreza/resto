@@ -4,7 +4,7 @@ import 'package:resto/core/error/exceptions.dart';
 import 'package:resto/core/error/failures.dart';
 import 'package:resto/feature/resto/data/response/remote/restaurant/detail_restaurant_dto.dart';
 import 'package:resto/feature/resto/data/response/remote/restaurant/restaurant_dto.dart';
-import 'package:resto/feature/resto/data/service/restaurant_service.dart';
+import 'package:resto/feature/resto/data/service/api/restaurant_service.dart';
 import 'package:resto/feature/resto/domain/entity/restaurant/detail_restaurant.dart';
 import 'package:resto/feature/resto/domain/entity/restaurant/restaurant.dart';
 

@@ -2,7 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:resto/core/network/base_api_client.dart';
 import 'package:resto/feature/resto/data/repository/restaurant_repository_impl.dart';
-import 'package:resto/feature/resto/data/service/restaurant_service.dart';
+import 'package:resto/feature/resto/data/service/api/restaurant_service.dart';
 import 'package:resto/feature/resto/data/source/local/restaurant_local_data_source.dart';
 import 'package:resto/feature/resto/data/source/remote/restaurant_remote_data_source.dart';
 import 'package:resto/feature/resto/domain/repository/restaurant_repository.dart';
