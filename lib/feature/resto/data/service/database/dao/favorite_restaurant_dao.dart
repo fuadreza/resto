@@ -17,10 +17,13 @@ class FavoriteRestaurantDao {
   Future<List<DetailRestaurant>> getFavoriteRestaurants() async {
     final db = await databaseHelper.database;
     List<DetailRestaurant> list = [];
+    print('DB $db');
     final List<Map<String, dynamic>>? results = await db?.query(
       FavoriteRestaurantTable.tableName,
       columns: [FavoriteRestaurantTable.columnRestaurant],
     );
+
+    print('RESULT $results');
 
     if (results!.length > 0) {
       return results

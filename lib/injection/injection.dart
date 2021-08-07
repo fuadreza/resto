@@ -9,9 +9,11 @@ import 'package:resto/feature/resto/data/source/local/restaurant_local_data_sour
 import 'package:resto/feature/resto/data/source/remote/restaurant_remote_data_source.dart';
 import 'package:resto/feature/resto/domain/repository/restaurant_repository.dart';
 import 'package:resto/feature/resto/domain/usecase/get_detail_restaurant_use_case.dart';
+import 'package:resto/feature/resto/domain/usecase/get_favorite_restaurant_use_case.dart';
 import 'package:resto/feature/resto/domain/usecase/get_restaurants_use_case.dart';
 import 'package:resto/feature/resto/domain/usecase/search_restaurant_use_case.dart';
 import 'package:resto/feature/resto/presentation/bloc/detail/detail_restaurant_cubit.dart';
+import 'package:resto/feature/resto/presentation/bloc/favorite/favorite_restaurant_cubit.dart';
 import 'package:resto/feature/resto/presentation/bloc/restaurant/restaurant_cubit.dart';
 import 'package:resto/feature/resto/presentation/bloc/search/search_restaurant_cubit.dart';
 
@@ -35,6 +37,11 @@ Future<void> init() async {
       searchRestaurantUseCase: di(),
     ),
   );
+  di.registerFactory(
+        () => FavoriteRestaurantCubit(
+      getFavoriteRestaurantsUseCase: di(),
+    ),
+  );
 
   // Use cases
   di.registerLazySingleton(
@@ -49,6 +56,11 @@ Future<void> init() async {
   );
   di.registerLazySingleton(
     () => SearchRestaurantUseCase(
+      repository: di(),
+    ),
+  );
+  di.registerLazySingleton(
+        () => GetFavoriteRestaurantsUseCase(
       repository: di(),
     ),
   );
