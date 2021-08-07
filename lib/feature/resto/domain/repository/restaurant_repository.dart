@@ -10,5 +10,5 @@ abstract class RestaurantRepository {
 
   Future<List<Restaurant>> getFavoriteRestaurants();
 
-//Future<List<Restaurant>> setFavoriteRestaurants(DetailRestaurant restaurant);
+  Future<String> setFavoriteRestaurant(DetailRestaurant restaurant);
 }
