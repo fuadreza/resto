@@ -40,4 +40,13 @@ class RestaurantRepositoryImpl implements RestaurantRepository {
       return await localDataSource.searchRestaurant(keyword);
     }
   }
+
+  @override
+  Future<List<Restaurant>> getFavoriteRestaurants() async {
+    try {
+      return await localDataSource.getFavoriteRestaurants();
+    } on CacheFailure {
+      throw CacheFailure;
+    }
+  }
 }

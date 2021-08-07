@@ -27,16 +27,18 @@ class DetailRestaurantDto extends DetailRestaurant {
     required this.categories,
     required this.reviews,
   }) : super(
-    id: id,
-    name: name,
-    description: description,
-    pictureId: pictureId,
-    city: city,
-    rating: rating,
-    menu: menu,
-    categories: categories,
-    reviews: reviews,
-  );
+          id: id,
+          name: name,
+          description: description,
+          pictureId: pictureId,
+          city: city,
+          rating: rating,
+          menu: menu,
+          categories: categories,
+          reviews: reviews,
+        );
+
+  final picUrl = 'https://restaurant-api.dicoding.dev/images/medium/';
 
   factory DetailRestaurantDto.fromJson(Map<String, dynamic> json) {
     final pictureUrl = 'https://restaurant-api.dicoding.dev/images/medium/';
@@ -50,6 +52,32 @@ class DetailRestaurantDto extends DetailRestaurant {
       menu: MenuModel.toMenu(MenuModel.fromJson(json['menus'])),
       categories: parseCategories(json['categories']),
       reviews: parseReviews(json['customerReviews']),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'description': description,
+        'pictureId': pictureId,
+        'city': city,
+        'rating': rating,
+        'menus': MenuModel.fromMenu(menu).toJson(),
+        'categories': List<dynamic>.from(categories.map((data) => CategoryModel.fromCategory(data).toJson())),
+        'customerReviews': List<dynamic>.from(reviews.map((data) => ReviewModel.fromReview(data).toJson())),
+      };
+
+  factory DetailRestaurantDto.fromDetailRestaurant(DetailRestaurant restaurant) {
+    return DetailRestaurantDto(
+      id: restaurant.id,
+      name: restaurant.name,
+      description: restaurant.description,
+      pictureId: restaurant.pictureId,
+      city: restaurant.city,
+      rating: restaurant.rating,
+      menu: restaurant.menu,
+      categories: restaurant.categories,
+      reviews: restaurant.reviews,
     );
   }
 
@@ -75,12 +103,20 @@ class MenuModel extends Menu {
     required this.drinks,
   }) : super(foods: foods, drinks: drinks);
 
-  factory MenuModel.fromJson(Map<String, dynamic> json) {
-    return MenuModel(
-      foods: parseFoods(json['foods']),
-      drinks: parseDrinks(json['drinks']),
-    );
-  }
+  factory MenuModel.fromJson(Map<String, dynamic> json) => MenuModel(
+        foods: parseFoods(json['foods']),
+        drinks: parseDrinks(json['drinks']),
+      );
+
+  factory MenuModel.fromMenu(Menu menu) => MenuModel(
+    foods: menu.foods,
+    drinks: menu.drinks,
+  );
+
+  Map<String, dynamic> toJson() => {
+        'foods': List<dynamic>.from(foods.map((data) => FoodModel.fromFood(data).toJson())),
+        'drinks': List<dynamic>.from(drinks.map((data) => DrinkModel.fromDrink(data).toJson())),
+      };
 
   static Menu toMenu(MenuModel model) {
     return Menu(
@@ -111,6 +147,12 @@ class FoodModel extends Food {
     return FoodModel(name: json['name']);
   }
 
+  factory FoodModel.fromFood(Food food) {
+    return FoodModel(name: food.name);
+  }
+
+  Map<String, dynamic> toJson() => {'name': name};
+
   static Food toFood(FoodModel model) {
     return Food(
       name: model.name,
@@ -129,6 +171,12 @@ class DrinkModel extends Drink {
     );
   }
 
+  factory DrinkModel.fromDrink(Drink drink) {
+    return DrinkModel(name: drink.name);
+  }
+
+  Map<String, dynamic> toJson() => {'name': name};
+
   static Drink toDrink(DrinkModel model) {
     return Drink(
       name: model.name,
@@ -145,10 +193,16 @@ class CategoryModel extends Category {
     return CategoryModel(name: json['name']);
   }
 
+  factory CategoryModel.fromCategory(Category category) {
+    return CategoryModel(name: category.name);
+  }
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+      };
+
   static Category toCategory(CategoryModel model) {
-    return Category(
-        name: model.name
-    );
+    return Category(name: model.name);
   }
 }
 
@@ -170,6 +224,20 @@ class ReviewModel extends Review {
       date: json["date"],
     );
   }
+
+  factory ReviewModel.fromReview(Review review) {
+    return ReviewModel(
+      name: review.name,
+      review: review.review,
+      date: review.date,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'review': review,
+        'date': date,
+      };
 
   static Review toReview(ReviewModel model) {
     return Review(

@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:resto/core/network/base_api_client.dart';
 import 'package:resto/feature/resto/data/repository/restaurant_repository_impl.dart';
 import 'package:resto/feature/resto/data/service/api/restaurant_service.dart';
+import 'package:resto/feature/resto/data/service/database/dao/favorite_restaurant_dao.dart';
+import 'package:resto/feature/resto/data/service/database/database_helper.dart';
 import 'package:resto/feature/resto/data/source/local/restaurant_local_data_source.dart';
 import 'package:resto/feature/resto/data/source/remote/restaurant_remote_data_source.dart';
 import 'package:resto/feature/resto/domain/repository/restaurant_repository.dart';
@@ -62,7 +64,9 @@ Future<void> init() async {
   // Data sources
   // Local
   di.registerLazySingleton<RestaurantLocalDataSource>(
-    () => RestaurantLocalDataSourceImpl(),
+    () => RestaurantLocalDataSourceImpl(
+      favoriteRestaurantDao: di(),
+    ),
   );
 
   // Remote
@@ -79,11 +83,21 @@ Future<void> init() async {
     ),
   );
 
+  // Dao
+  di.registerLazySingleton<FavoriteRestaurantDao>(
+    () => FavoriteRestaurantDao(
+      databaseHelper: di(),
+    ),
+  );
+
   //! Core
   di.registerLazySingleton<BaseApiClient>(
     () => BaseApiClient(
       client: di(),
     ),
+  );
+  di.registerLazySingleton<DatabaseHelper>(
+    () => DatabaseHelper(),
   );
 
   //! External
