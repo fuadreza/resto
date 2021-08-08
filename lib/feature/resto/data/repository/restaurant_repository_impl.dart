@@ -58,4 +58,13 @@ class RestaurantRepositoryImpl implements RestaurantRepository {
       throw CacheFailure;
     }
   }
+
+  @override
+  Future<String> removeFavoriteRestaurant(Restaurant restaurant) async {
+    try {
+      return await localDataSource.removeFavoriteRestaurant(restaurant);
+    } on Exception {
+      throw CacheFailure;
+    }
+  }
 }

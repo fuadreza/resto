@@ -21,6 +21,19 @@ class FavoriteRestaurantDao {
     }
   }
 
+  Future<void> remove(Restaurant restaurant) async {
+    final db = await databaseHelper.database;
+    try {
+      await db?.delete(
+        FavoriteRestaurantTable.tableName,
+        where: '${FavoriteRestaurantTable.columnId} = ?',
+        whereArgs: [restaurant.id],
+      );
+    } on Exception catch (e) {
+      log('ERROR: $e');
+    }
+  }
+
   Future<List<Restaurant>> getFavoriteRestaurants() async {
     final db = await databaseHelper.database;
     final List<Map<String, dynamic>>? results = await db?.query(

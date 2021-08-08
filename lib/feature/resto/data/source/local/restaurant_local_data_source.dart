@@ -17,6 +17,8 @@ abstract class RestaurantLocalDataSource {
   Future<List<Restaurant>> getFavoriteRestaurants();
 
   Future<String> setFavoriteRestaurant(Restaurant restaurant);
+
+  Future<String> removeFavoriteRestaurant(Restaurant restaurant);
 }
 
 class RestaurantLocalDataSourceImpl implements RestaurantLocalDataSource {
@@ -71,6 +73,12 @@ class RestaurantLocalDataSourceImpl implements RestaurantLocalDataSource {
   @override
   Future<String> setFavoriteRestaurant(Restaurant restaurant) async {
     await favoriteRestaurantDao.insert(restaurant);
+    return 'Success';
+  }
+
+  @override
+  Future<String> removeFavoriteRestaurant(Restaurant restaurant) async {
+    await favoriteRestaurantDao.remove(restaurant);
     return 'Success';
   }
 }
