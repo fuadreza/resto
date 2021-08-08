@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:resto/core/route/main_route.dart';
 import 'package:resto/feature/resto/presentation/bloc/favorite/favorite_restaurant_cubit.dart';
 import 'package:resto/feature/resto/presentation/bloc/favorite/favorite_restaurant_state.dart';
 import 'package:resto/feature/resto/presentation/widgets/item_restaurant.dart';
 import 'package:resto/injection/injection.dart';
 
 class FavoriteRestaurantPage extends StatelessWidget {
-  const FavoriteRestaurantPage({Key? key}) : super(key: key);
+  var _context;
 
   @override
   Widget build(BuildContext context) {
+    _context = context;
+
     return Scaffold(
       body: SafeArea(
         child: BlocProvider(
@@ -55,7 +58,7 @@ class FavoriteRestaurantPage extends StatelessWidget {
                           (index) {
                             return InkWell(
                               onTap: () {
-                                //_onRestaurantSelected(state.restaurants[index].id);
+                                _onRestaurantSelected(state.restaurants[index].id);
                               },
                               borderRadius: BorderRadius.circular(10),
                               child: ItemRestaurant(restaurant: state.restaurants[index]),
@@ -76,5 +79,9 @@ class FavoriteRestaurantPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _onRestaurantSelected(String restaurantId) {
+    goToScreen(_context, DetailRestaurantPageRoute, arguments: restaurantId);
   }
 }
