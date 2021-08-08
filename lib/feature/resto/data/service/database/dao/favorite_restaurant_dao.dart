@@ -1,50 +1,43 @@
-import 'package:resto/feature/resto/data/response/remote/restaurant/detail_restaurant_dto.dart';
+import 'dart:developer';
+
+import 'package:resto/feature/resto/data/response/remote/restaurant/restaurant_dto.dart';
 import 'package:resto/feature/resto/data/service/database/database_helper.dart';
 import 'package:resto/feature/resto/data/service/database/tables/favorite_restaurant_table.dart';
-
-import '../../../../domain/entity/restaurant/detail_restaurant.dart';
+import 'package:resto/feature/resto/domain/entity/restaurant/restaurant.dart';
+import 'package:sqflite/sqflite.dart';
 
 class FavoriteRestaurantDao {
   final DatabaseHelper databaseHelper;
 
   FavoriteRestaurantDao({required this.databaseHelper});
 
-  Future<void> insert(DetailRestaurant restaurant) async {
+  Future<void> insert(Restaurant restaurant) async {
     final db = await databaseHelper.database;
-    await db?.insert(FavoriteRestaurantTable.tableName, DetailRestaurantDto.fromDetailRestaurant(restaurant).toJson());
+    try {
+      await db?.insert(FavoriteRestaurantTable.tableName, FavoriteRestaurantTable.toMap(restaurant),
+          conflictAlgorithm: ConflictAlgorithm.replace);
+    } on Exception catch (e) {
+      log('ERROR: $e');
+    }
   }
 
-  Future<List<DetailRestaurant>> getFavoriteRestaurants() async {
+  Future<List<Restaurant>> getFavoriteRestaurants() async {
     final db = await databaseHelper.database;
-    List<DetailRestaurant> list = [];
-    print('DB $db');
     final List<Map<String, dynamic>>? results = await db?.query(
       FavoriteRestaurantTable.tableName,
-      columns: [FavoriteRestaurantTable.columnRestaurant],
+      columns: [
+        FavoriteRestaurantTable.columnId,
+        FavoriteRestaurantTable.columnName,
+        FavoriteRestaurantTable.columnPictureId,
+        FavoriteRestaurantTable.columnCity,
+        FavoriteRestaurantTable.columnRating,
+      ],
     );
 
-    print('RESULT $results');
-
     if (results!.length > 0) {
-      return results
-          .map((data) => DetailRestaurantDto.fromJson(data[FavoriteRestaurantTable.columnRestaurant]))
-          .toList();
+      return results.map((data) => RestaurantModel.fromJson(data)).toList();
     }
 
-    return list;
+    return [];
   }
-
-// Future<DetailRestaurant?> getRestaurant(String restaurantId) async {
-//   final db = await databaseHelper.database;
-//   List<Map<String, dynamic>> maps = await _db.query(FavoriteRestaurantTable.tableName,
-//       columns: [FavoriteRestaurantTable.columnId, FavoriteRestaurantTable.columnRestaurant],
-//       where: '${FavoriteRestaurantTable.columnId} = ?',
-//       whereArgs: [restaurantId]
-//   );
-//
-//   if(maps.length > 0){
-//     return DetailRestaurantDto.fromJson(maps.first);
-//   }
-//   return null;
-// }
 }

@@ -12,6 +12,7 @@ import 'package:resto/feature/resto/domain/usecase/get_detail_restaurant_use_cas
 import 'package:resto/feature/resto/domain/usecase/get_favorite_restaurant_use_case.dart';
 import 'package:resto/feature/resto/domain/usecase/get_restaurants_use_case.dart';
 import 'package:resto/feature/resto/domain/usecase/search_restaurant_use_case.dart';
+import 'package:resto/feature/resto/domain/usecase/set_favorite_restaurant_use_case.dart';
 import 'package:resto/feature/resto/presentation/bloc/detail/detail_restaurant_cubit.dart';
 import 'package:resto/feature/resto/presentation/bloc/favorite/favorite_restaurant_cubit.dart';
 import 'package:resto/feature/resto/presentation/bloc/restaurant/restaurant_cubit.dart';
@@ -30,6 +31,7 @@ Future<void> init() async {
   di.registerFactory(
     () => DetailRestaurantCubit(
       getDetailRestaurantUseCase: di(),
+      setFavoriteRestaurantUseCase: di(),
     ),
   );
   di.registerFactory(
@@ -61,6 +63,11 @@ Future<void> init() async {
   );
   di.registerLazySingleton(
         () => GetFavoriteRestaurantsUseCase(
+      repository: di(),
+    ),
+  );
+  di.registerLazySingleton(
+        () => SetFavoriteRestaurantUseCase(
       repository: di(),
     ),
   );

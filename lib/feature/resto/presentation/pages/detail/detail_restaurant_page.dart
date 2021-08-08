@@ -81,6 +81,23 @@ class DetailRestaurantPage extends StatelessWidget {
                               ),
                             ),
                           ),
+                          Positioned(
+                            top: 16,
+                            right: 16,
+                            child: InkWell(
+                              onTap: () {
+                                context.read<DetailRestaurantCubit>().setFavoriteRestaurant(state.detailRestaurant);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white.withOpacity(0.9),
+                                ),
+                                child: Icon(Icons.favorite),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                       Container(

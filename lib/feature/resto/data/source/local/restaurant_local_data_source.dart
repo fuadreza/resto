@@ -15,6 +15,8 @@ abstract class RestaurantLocalDataSource {
   Future<List<Restaurant>> searchRestaurant(String keyword);
 
   Future<List<Restaurant>> getFavoriteRestaurants();
+
+  Future<String> setFavoriteRestaurant(Restaurant restaurant);
 }
 
 class RestaurantLocalDataSourceImpl implements RestaurantLocalDataSource {
@@ -63,14 +65,12 @@ class RestaurantLocalDataSourceImpl implements RestaurantLocalDataSource {
 
   @override
   Future<List<Restaurant>> getFavoriteRestaurants() async {
-    final results = await favoriteRestaurantDao.getFavoriteRestaurants();
-    final list = List<Restaurant>.from(results.map((data) => Restaurant(
-          id: data.id,
-          name: data.name,
-          pictureId: data.pictureId,
-          city: data.city,
-          rating: data.rating,
-        ))).toList();
-    return list;
+    return await favoriteRestaurantDao.getFavoriteRestaurants();
+  }
+
+  @override
+  Future<String> setFavoriteRestaurant(Restaurant restaurant) async {
+    await favoriteRestaurantDao.insert(restaurant);
+    return 'Success';
   }
 }
