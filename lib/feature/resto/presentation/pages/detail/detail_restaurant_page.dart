@@ -42,6 +42,7 @@ class DetailRestaurantPage extends StatelessWidget {
                       Stack(
                         clipBehavior: Clip.none,
                         children: [
+                          Container(height: 350,width: MediaQuery.of(context).size.width),
                           ClipRRect(
                             borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(10),
@@ -51,10 +52,11 @@ class DetailRestaurantPage extends StatelessWidget {
                               tag: state.detailRestaurant.pictureId,
                               child: Image.network(
                                 state.detailRestaurant.pictureId,
+                                height: 320,
                                 fit: BoxFit.cover,
                                 errorBuilder: (_, error, stackTrace) {
                                   return Container(
-                                    width: double.infinity,
+                                    width: MediaQuery.of(context).size.width,
                                     height: 200,
                                     color: AppColors.secondary,
                                     child: Center(
@@ -83,13 +85,13 @@ class DetailRestaurantPage extends StatelessWidget {
                             ),
                           ),
                           Positioned(
-                            bottom: -30,
+                            bottom: 0,
                             right: 16,
                             child: Card(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              child: InkWell(
+                              child: GestureDetector(
                                 onTap: () {
                                   context.read<DetailRestaurantCubit>().setFavoriteRestaurant(state.detailRestaurant);
                                 },
@@ -116,7 +118,7 @@ class DetailRestaurantPage extends StatelessWidget {
                         ],
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 16),
+                        margin: EdgeInsets.only(left: 20, right: 20, bottom: 16),
                         child: Text(
                           state.detailRestaurant.name + ' ★ ${state.detailRestaurant.rating}',
                           style: TextStyle(
