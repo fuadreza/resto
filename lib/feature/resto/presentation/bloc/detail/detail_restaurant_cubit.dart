@@ -29,15 +29,31 @@ class DetailRestaurantCubit extends Cubit<DetailRestaurantState> {
 
   Future<void> setFavoriteRestaurant(DetailRestaurant restaurant) async {
     try {
-      final _ = await setFavoriteRestaurantUseCase.invoke(
-        Restaurant(
-          id: restaurant.id,
-          name: restaurant.name,
-          pictureId: restaurant.pictureId,
-          city: restaurant.city,
-          rating: restaurant.rating,
-        ),
-      );
+      if (restaurant.isFavorite){
+        await removeFavoriteRestaurantUseCase.invoke(
+          Restaurant(
+            id: restaurant.id,
+            name: restaurant.name,
+            pictureId: restaurant.pictureId,
+            city: restaurant.city,
+            rating: restaurant.rating,
+          ),
+        );
+      }else {
+        await setFavoriteRestaurantUseCase.invoke(
+          Restaurant(
+            id: restaurant.id,
+            name: restaurant.name,
+            pictureId: restaurant.pictureId,
+            city: restaurant.city,
+            rating: restaurant.rating,
+          ),
+        );
+      }
+
+      final detailRestaurant = await getDetailRestaurantUseCase.invoke(restaurant.id);
+      emit(Loaded(detailRestaurant: detailRestaurant));
+
     } on Exception {
       throw Exception;
     }

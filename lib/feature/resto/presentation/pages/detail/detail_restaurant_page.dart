@@ -40,6 +40,7 @@ class DetailRestaurantPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Stack(
+                        clipBehavior: Clip.none,
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.only(
@@ -82,26 +83,40 @@ class DetailRestaurantPage extends StatelessWidget {
                             ),
                           ),
                           Positioned(
-                            top: 16,
+                            bottom: -30,
                             right: 16,
-                            child: InkWell(
-                              onTap: () {
-                                context.read<DetailRestaurantCubit>().setFavoriteRestaurant(state.detailRestaurant);
-                              },
-                              child: Container(
-                                padding: EdgeInsets.all(4),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.white.withOpacity(0.9),
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  context.read<DetailRestaurantCubit>().setFavoriteRestaurant(state.detailRestaurant);
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white,
+                                  ),
+                                  child: state.detailRestaurant.isFavorite
+                                      ? Icon(
+                                          Icons.favorite,
+                                          size: 40,
+                                          color: Colors.redAccent,
+                                        )
+                                      : Icon(
+                                          Icons.favorite_border,
+                                          size: 40,
+                                        ),
                                 ),
-                                child: Icon(Icons.favorite),
                               ),
                             ),
                           ),
                         ],
                       ),
                       Container(
-                        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                        margin: EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 16),
                         child: Text(
                           state.detailRestaurant.name + ' ★ ${state.detailRestaurant.rating}',
                           style: TextStyle(
