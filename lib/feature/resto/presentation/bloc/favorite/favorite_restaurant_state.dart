@@ -1,4 +1,3 @@
-
 import 'package:equatable/equatable.dart';
 import 'package:resto/feature/resto/domain/entity/restaurant/restaurant.dart';
 
@@ -27,4 +26,13 @@ class Loaded extends FavoriteRestaurantState {
 
   @override
   List<Object> get props => [restaurants];
+}
+
+class Empty extends FavoriteRestaurantState {
+  final String message;
+
+  Empty({required this.message});
+
+  @override
+  List<Object> get props => [message];
 }

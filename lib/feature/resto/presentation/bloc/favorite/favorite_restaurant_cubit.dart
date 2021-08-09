@@ -12,7 +12,11 @@ class FavoriteRestaurantCubit extends Cubit<FavoriteRestaurantState> {
     emit(Loading());
     try {
       final restaurants = await getFavoriteRestaurantsUseCase.invoke(NoParams());
-      emit(Loaded(restaurants: restaurants));
+      if (restaurants.isNotEmpty) {
+        emit(Loaded(restaurants: restaurants));
+      } else {
+        emit(Empty(message: 'You don\'t have favorite restaurant yet, Try adding them from detail page'));
+      }
     } on Exception {
       emit(Error(message: 'Failed to load favorite restaurants'));
     }
