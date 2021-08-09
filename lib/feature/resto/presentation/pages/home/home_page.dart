@@ -5,8 +5,6 @@ import 'package:resto/feature/resto/presentation/pages/favorite/favorite_restaur
 import 'package:resto/feature/resto/presentation/pages/setting/setting_page.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
-import '../../../../../core/route/main_route.dart';
-import '../../../../../core/theme/app_colors.dart';
 import '../restaurant/restaurant_page.dart';
 import '../search/search_restaurant_page.dart';
 
@@ -26,16 +24,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: SafeArea(
         child: _getSelectedPage(_selectedIndex),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          goToScreen(context, SearchRestaurantPageRoute);
-        },
-        child: Icon(
-          Icons.search,
-          color: AppColors.black,
-        ),
-        backgroundColor: AppColors.white,
       ),
       bottomNavigationBar: SalomonBottomBar(
         currentIndex: _selectedIndex,

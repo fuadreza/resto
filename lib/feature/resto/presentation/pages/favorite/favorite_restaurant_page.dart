@@ -8,18 +8,14 @@ import 'package:resto/feature/resto/presentation/widgets/item_restaurant.dart';
 import 'package:resto/injection/injection.dart';
 
 class FavoriteRestaurantPage extends StatelessWidget {
-  var _context;
-
   @override
   Widget build(BuildContext context) {
-    _context = context;
-
     return Scaffold(
       body: SafeArea(
         child: BlocProvider(
-          create: (_) => di<FavoriteRestaurantCubit>(),
+          create: (context) => di<FavoriteRestaurantCubit>(),
           child: BlocConsumer<FavoriteRestaurantCubit, FavoriteRestaurantState>(listener: (context, state) {
-            print('state $state');
+            print('Favorite state: $state');
           }, builder: (context, state) {
             if (state is Init) {
               context.read<FavoriteRestaurantCubit>().getFavoriteRestaurants();
@@ -58,7 +54,7 @@ class FavoriteRestaurantPage extends StatelessWidget {
                           (index) {
                             return InkWell(
                               onTap: () {
-                                _onRestaurantSelected(state.restaurants[index].id);
+                                _onRestaurantSelected(context, state.restaurants[index].id);
                               },
                               borderRadius: BorderRadius.circular(10),
                               child: ItemRestaurant(restaurant: state.restaurants[index]),
@@ -81,7 +77,9 @@ class FavoriteRestaurantPage extends StatelessWidget {
     );
   }
 
-  _onRestaurantSelected(String restaurantId) {
-    goToScreen(_context, DetailRestaurantPageRoute, arguments: restaurantId);
+  _onRestaurantSelected(BuildContext context, String restaurantId) {
+    goToScreen(context, DetailRestaurantPageRoute, arguments: restaurantId, afterPop: () {
+      context.read<FavoriteRestaurantCubit>().getFavoriteRestaurants();
+    });
   }
 }

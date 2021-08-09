@@ -10,12 +10,8 @@ import 'package:resto/feature/resto/presentation/widgets/item_restaurant.dart';
 import 'package:resto/injection/injection.dart';
 
 class RestaurantPage extends StatelessWidget {
-  var _context;
-
   @override
   Widget build(BuildContext context) {
-    _context = context;
-
     return Scaffold(
       body: SafeArea(
         child: BlocProvider(
@@ -76,7 +72,7 @@ class RestaurantPage extends StatelessWidget {
                                   (index) {
                                     return InkWell(
                                       onTap: () {
-                                        _onRestaurantSelected(state.restaurants[index].id);
+                                        _onRestaurantSelected(context, state.restaurants[index].id);
                                       },
                                       borderRadius: BorderRadius.circular(10),
                                       child: ItemRestaurant(restaurant: state.restaurants[index]),
@@ -104,20 +100,10 @@ class RestaurantPage extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          goToScreen(_context, SearchRestaurantPageRoute);
-        },
-        child: Icon(
-          Icons.search,
-          color: AppColors.black,
-        ),
-        backgroundColor: AppColors.white,
-      ),
     );
   }
 
-  _onRestaurantSelected(String restaurantId) {
-    goToScreen(_context, DetailRestaurantPageRoute, arguments: restaurantId);
+  _onRestaurantSelected(BuildContext context, String restaurantId) {
+    goToScreen(context, DetailRestaurantPageRoute, arguments: restaurantId);
   }
 }

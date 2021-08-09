@@ -34,9 +34,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   }
 }
 
-void goToScreen(BuildContext context, String route, {dynamic arguments}) {
+void goToScreen(BuildContext context, String route, {dynamic arguments, Function? afterPop}) {
   if (arguments != null) {
-    Navigator.pushNamed(context, route, arguments: arguments);
+    if (afterPop != null) {
+      Navigator.pushNamed(context, route, arguments: arguments).then((value) => afterPop());
+    } else {
+      Navigator.pushNamed(context, route, arguments: arguments);
+    }
   } else {
     Navigator.pushNamed(context, route);
   }
