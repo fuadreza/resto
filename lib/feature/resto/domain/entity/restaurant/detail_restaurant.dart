@@ -13,6 +13,7 @@ class DetailRestaurant extends Equatable {
   final Menu menu;
   final List<Category> categories;
   final List<Review> reviews;
+  final bool isFavorite;
 
   DetailRestaurant({
     required this.id,
@@ -24,8 +25,9 @@ class DetailRestaurant extends Equatable {
     required this.menu,
     required this.categories,
     required this.reviews,
+    required this.isFavorite,
   });
 
   @override
-  List<Object> get props => [id, name, description, pictureId, city, rating, menu, categories, reviews];
+  List<Object> get props => [id, name, description, pictureId, city, rating, menu, categories, reviews, isFavorite];
 }

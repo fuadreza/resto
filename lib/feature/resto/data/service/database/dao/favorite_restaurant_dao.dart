@@ -53,4 +53,18 @@ class FavoriteRestaurantDao {
 
     return [];
   }
+
+  Future<bool> isRestaurantFavorite(String restaurantId) async {
+    final db = await databaseHelper.database;
+    final List<Map<String, dynamic>>? results = await db?.query(
+      FavoriteRestaurantTable.tableName,
+      where: '${FavoriteRestaurantTable.columnId} = ?',
+      whereArgs: [restaurantId],
+    );
+
+    if(results != null) {
+      return results.isNotEmpty;
+    }
+    return false;
+  }
 }

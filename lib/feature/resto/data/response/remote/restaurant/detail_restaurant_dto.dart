@@ -15,6 +15,7 @@ class DetailRestaurantDto extends DetailRestaurant {
   final Menu menu;
   final List<Category> categories;
   final List<Review> reviews;
+  final bool isFavorite;
 
   DetailRestaurantDto({
     required this.id,
@@ -26,6 +27,7 @@ class DetailRestaurantDto extends DetailRestaurant {
     required this.menu,
     required this.categories,
     required this.reviews,
+    required this.isFavorite,
   }) : super(
           id: id,
           name: name,
@@ -36,6 +38,7 @@ class DetailRestaurantDto extends DetailRestaurant {
           menu: menu,
           categories: categories,
           reviews: reviews,
+          isFavorite: isFavorite,
         );
 
   final picUrl = 'https://restaurant-api.dicoding.dev/images/medium/';
@@ -52,6 +55,7 @@ class DetailRestaurantDto extends DetailRestaurant {
       menu: MenuModel.toMenu(MenuModel.fromJson(json['menus'])),
       categories: parseCategories(json['categories']),
       reviews: parseReviews(json['customerReviews']),
+      isFavorite: false,
     );
   }
 
@@ -78,6 +82,7 @@ class DetailRestaurantDto extends DetailRestaurant {
       menu: restaurant.menu,
       categories: restaurant.categories,
       reviews: restaurant.reviews,
+      isFavorite: restaurant.isFavorite,
     );
   }
 
@@ -109,9 +114,9 @@ class MenuModel extends Menu {
       );
 
   factory MenuModel.fromMenu(Menu menu) => MenuModel(
-    foods: menu.foods,
-    drinks: menu.drinks,
-  );
+        foods: menu.foods,
+        drinks: menu.drinks,
+      );
 
   Map<String, dynamic> toJson() => {
         'foods': List<dynamic>.from(foods.map((data) => FoodModel.fromFood(data).toJson())),

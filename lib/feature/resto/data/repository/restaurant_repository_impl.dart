@@ -26,7 +26,20 @@ class RestaurantRepositoryImpl implements RestaurantRepository {
   @override
   Future<DetailRestaurant> getDetailRestaurant(String restaurantId) async {
     try {
-      return await remoteDataSource.getDetailRestaurant(restaurantId);
+      final result = await remoteDataSource.getDetailRestaurant(restaurantId);
+      final isFavorite = await localDataSource.isRestaurantFavorite(restaurantId);
+      return DetailRestaurant(
+        id: result.id,
+        name: result.name,
+        description: result.description,
+        pictureId: result.pictureId,
+        city: result.city,
+        rating: result.rating,
+        menu: result.menu,
+        categories: result.categories,
+        reviews: result.reviews,
+        isFavorite: isFavorite,
+      );
     } on ServerFailure {
       return await localDataSource.getDetailRestaurant(restaurantId);
     }

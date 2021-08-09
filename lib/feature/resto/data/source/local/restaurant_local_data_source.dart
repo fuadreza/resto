@@ -19,6 +19,8 @@ abstract class RestaurantLocalDataSource {
   Future<String> setFavoriteRestaurant(Restaurant restaurant);
 
   Future<String> removeFavoriteRestaurant(Restaurant restaurant);
+
+  Future<bool> isRestaurantFavorite(String restaurantId);
 }
 
 class RestaurantLocalDataSourceImpl implements RestaurantLocalDataSource {
@@ -80,5 +82,10 @@ class RestaurantLocalDataSourceImpl implements RestaurantLocalDataSource {
   Future<String> removeFavoriteRestaurant(Restaurant restaurant) async {
     await favoriteRestaurantDao.remove(restaurant);
     return 'Success';
+  }
+
+  @override
+  Future<bool> isRestaurantFavorite(String restaurantId) async {
+    return await favoriteRestaurantDao.isRestaurantFavorite(restaurantId);
   }
 }

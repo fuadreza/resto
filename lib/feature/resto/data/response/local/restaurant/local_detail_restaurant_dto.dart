@@ -32,6 +32,7 @@ class DetailRestaurantModel extends DetailRestaurant {
   final Menu menu;
   final List<Category> categories;
   final List<Review> reviews;
+  final bool isFavorite;
 
   DetailRestaurantModel({
     required this.id,
@@ -43,6 +44,7 @@ class DetailRestaurantModel extends DetailRestaurant {
     required this.menu,
     required this.categories,
     required this.reviews,
+    required this.isFavorite,
   }) : super(
           id: id,
           name: name,
@@ -53,6 +55,7 @@ class DetailRestaurantModel extends DetailRestaurant {
           menu: menu,
           categories: categories,
           reviews: reviews,
+          isFavorite: isFavorite,
         );
 
   factory DetailRestaurantModel.fromJson(Map<String, dynamic> json) {
@@ -66,6 +69,7 @@ class DetailRestaurantModel extends DetailRestaurant {
       menu: MenuModel.toMenu(MenuModel.fromJson(json['menus'])),
       categories: [],
       reviews: [],
+      isFavorite: false,
     );
   }
 
@@ -80,6 +84,7 @@ class DetailRestaurantModel extends DetailRestaurant {
       menu: model.menu,
       categories: model.categories,
       reviews: model.reviews,
+      isFavorite: model.isFavorite,
     );
   }
 }
