@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:resto/core/utils/shared_pref_util.dart';
 
 class SettingPage extends StatefulWidget {
   @override
@@ -8,6 +9,12 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage> {
   var isNotificationEnable = false;
+
+  @override
+  void initState() {
+    isNotificationEnable = sp.getNotificationState();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +64,7 @@ class _SettingPageState extends State<SettingPage> {
                         onChanged: (value) {
                           setState(() {
                             isNotificationEnable = value;
+                            sp.setNotificationState(value);
                           });
                         },
                       ),
