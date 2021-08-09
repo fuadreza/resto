@@ -16,7 +16,7 @@ class SearchRestaurantCubit extends Cubit<SearchRestaurantState> {
       if (restaurants.isNotEmpty) {
         emit(Loaded(restaurants: restaurants));
       } else {
-        emit(Error(message: 'Cannot find any restaurant'));
+        emit(Empty(message: 'Cannot find any restaurant'));
       }
     } on Exception {
       emit(Error(message: 'Restaurant not found'));

@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resto/core/route/main_route.dart';
 import 'package:resto/core/theme/app_colors.dart';
+import 'package:resto/feature/resto/domain/entity/restaurant/restaurant.dart';
 import 'package:resto/feature/resto/presentation/bloc/search/search_restaurant_cubit.dart';
 import 'package:resto/feature/resto/presentation/bloc/search/search_restaurant_state.dart';
 import 'package:resto/feature/resto/presentation/widgets/item_restaurant.dart';
@@ -10,12 +11,8 @@ import 'package:resto/feature/resto/presentation/widgets/search_bar.dart';
 import 'package:resto/injection/injection.dart';
 
 class SearchRestaurantPage extends StatelessWidget {
-  var _context;
-
   @override
   Widget build(BuildContext context) {
-    _context = context;
-
     return Scaffold(
       body: SafeArea(
         child: BlocProvider(
@@ -68,6 +65,11 @@ class SearchRestaurantPage extends StatelessWidget {
                             SizedBox(
                               height: 16,
                             ),
+                            Expanded(
+                              child: Center(
+                                child: Text('Search any restaurant'),
+                              ),
+                            ),
                           ],
                         );
                       } else if (state is Loading) {
@@ -104,34 +106,9 @@ class SearchRestaurantPage extends StatelessWidget {
                           ],
                         );
                       } else if (state is Loaded) {
-                        return Column(
-                          children: [
-                            SearchBar(
-                              onSubmit: (data) {
-                                context.read<SearchRestaurantCubit>().searchRestaurant(data);
-                              },
-                            ),
-                            SizedBox(
-                              height: 16,
-                            ),
-                            Expanded(
-                              child: ListView(
-                                children: List.generate(
-                                  state.restaurants.length,
-                                  (index) {
-                                    return InkWell(
-                                      onTap: () {
-                                        _onRestaurantSelected(state.restaurants[index].id);
-                                      },
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: ItemRestaurant(restaurant: state.restaurants[index]),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
+                        return _displayOnRestaurantsFound(context, state.restaurants);
+                      } else if (state is Empty) {
+                        return _displayOnRestaurantsNotFound(context, state.message);
                       } else if (state is Error) {
                         return Column(
                           children: [
@@ -179,7 +156,58 @@ class SearchRestaurantPage extends StatelessWidget {
     );
   }
 
-  _onRestaurantSelected(String restaurantId) {
-    goToScreen(_context, DetailRestaurantPageRoute, arguments: restaurantId);
+  Widget _displayOnRestaurantsFound(BuildContext context, List<Restaurant> restaurants) {
+    return Column(
+      children: [
+        SearchBar(
+          onSubmit: (data) {
+            context.read<SearchRestaurantCubit>().searchRestaurant(data);
+          },
+        ),
+        SizedBox(
+          height: 16,
+        ),
+        Expanded(
+          child: ListView(
+            children: List.generate(
+              restaurants.length,
+                  (index) {
+                return InkWell(
+                  onTap: () {
+                    _onRestaurantSelected(context, restaurants[index].id);
+                  },
+                  borderRadius: BorderRadius.circular(10),
+                  child: ItemRestaurant(restaurant: restaurants[index]),
+                );
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _displayOnRestaurantsNotFound(BuildContext context, String message){
+    return Column(
+      children: [
+        SearchBar(
+          onSubmit: (data) {
+            context.read<SearchRestaurantCubit>().searchRestaurant(data);
+          },
+        ),
+        SizedBox(
+          height: 16,
+        ),
+        Expanded(
+          child: Center(
+            child: Text(message),
+          ),
+        ),
+      ],
+    );
+  }
+
+  _onRestaurantSelected(BuildContext context, String restaurantId) {
+    goToScreen(context, DetailRestaurantPageRoute, arguments: restaurantId);
   }
 }

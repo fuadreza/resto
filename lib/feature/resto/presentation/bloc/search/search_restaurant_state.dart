@@ -27,3 +27,12 @@ class Loaded extends SearchRestaurantState {
   @override
   List<Object> get props => [restaurants];
 }
+
+class Empty extends SearchRestaurantState {
+  final String message;
+
+  Empty({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}
