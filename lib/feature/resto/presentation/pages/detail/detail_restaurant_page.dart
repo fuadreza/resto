@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:resto/core/route/main_route.dart';
+import 'package:resto/core/route/navigation_service.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/feature/resto/presentation/bloc/detail/detail_restaurant_cubit.dart';
 import 'package:resto/feature/resto/presentation/bloc/detail/detail_restaurant_state.dart';
@@ -72,7 +72,7 @@ class DetailRestaurantPage extends StatelessWidget {
                             left: 16,
                             child: InkWell(
                               onTap: () {
-                                goBack(context);
+                                NavigationService.back();
                               },
                               child: Container(
                                 padding: EdgeInsets.all(4),

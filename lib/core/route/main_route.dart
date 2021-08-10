@@ -33,19 +33,3 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => HomePage());
   }
 }
-
-void goToScreen(BuildContext context, String route, {dynamic arguments, Function? afterPop}) {
-  if (arguments != null) {
-    if (afterPop != null) {
-      Navigator.pushNamed(context, route, arguments: arguments).then((value) => afterPop());
-    } else {
-      Navigator.pushNamed(context, route, arguments: arguments);
-    }
-  } else {
-    Navigator.pushNamed(context, route);
-  }
-}
-
-void goBack(BuildContext context) {
-  Navigator.pop(context);
-}

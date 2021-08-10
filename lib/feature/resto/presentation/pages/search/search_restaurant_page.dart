@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resto/core/route/main_route.dart';
+import 'package:resto/core/route/navigation_service.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/feature/resto/domain/entity/restaurant/restaurant.dart';
 import 'package:resto/feature/resto/presentation/bloc/search/search_restaurant_cubit.dart';
@@ -26,25 +27,11 @@ class SearchRestaurantPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        goBack(context);
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(right: 8),
-                        padding: EdgeInsets.all(4),
-                        child: Icon(Icons.arrow_back),
-                      ),
-                    ),
-                    Text(
-                      'Search',
-                      style: TextStyle(
-                        fontSize: 30,
-                      ),
-                    ),
-                  ],
+                Text(
+                  'Search',
+                  style: TextStyle(
+                    fontSize: 30,
+                  ),
                 ),
                 SizedBox(height: 20),
                 Expanded(
@@ -67,7 +54,7 @@ class SearchRestaurantPage extends StatelessWidget {
                             ),
                             Expanded(
                               child: Center(
-                                child: Text('Search any restaurant'),
+                                child: Text('Type something'),
                               ),
                             ),
                           ],
@@ -208,6 +195,6 @@ class SearchRestaurantPage extends StatelessWidget {
   }
 
   _onRestaurantSelected(BuildContext context, String restaurantId) {
-    goToScreen(context, DetailRestaurantPageRoute, arguments: restaurantId);
+    NavigationService.navigateTo(DetailRestaurantPageRoute, arguments: restaurantId);
   }
 }

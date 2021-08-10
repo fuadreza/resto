@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resto/core/route/main_route.dart';
+import 'package:resto/core/route/navigation_service.dart';
 import 'package:resto/feature/resto/domain/entity/restaurant/restaurant.dart';
 import 'package:resto/feature/resto/presentation/bloc/favorite/favorite_restaurant_cubit.dart';
 import 'package:resto/feature/resto/presentation/bloc/favorite/favorite_restaurant_state.dart';
@@ -126,7 +127,7 @@ class FavoriteRestaurantPage extends StatelessWidget {
   }
 
   _onRestaurantSelected(BuildContext context, String restaurantId) {
-    goToScreen(context, DetailRestaurantPageRoute, arguments: restaurantId, afterPop: () {
+    NavigationService.navigateTo(DetailRestaurantPageRoute, arguments: restaurantId, afterPop: () {
       context.read<FavoriteRestaurantCubit>().getFavoriteRestaurants();
     });
   }

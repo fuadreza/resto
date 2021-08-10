@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resto/core/route/main_route.dart';
+import 'package:resto/core/route/navigation_service.dart';
 import 'package:resto/core/theme/app_colors.dart';
 import 'package:resto/core/utils/connectivity_util.dart';
 import 'package:resto/feature/resto/presentation/bloc/restaurant/restaurant_cubit.dart';
@@ -104,6 +105,6 @@ class RestaurantPage extends StatelessWidget {
   }
 
   _onRestaurantSelected(BuildContext context, String restaurantId) {
-    goToScreen(context, DetailRestaurantPageRoute, arguments: restaurantId);
+    NavigationService.navigateTo(DetailRestaurantPageRoute, arguments: restaurantId);
   }
 }
