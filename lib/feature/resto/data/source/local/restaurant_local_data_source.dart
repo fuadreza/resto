@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:resto/core/utils/random_util.dart';
 import 'package:resto/feature/resto/data/response/local/restaurant/local_detail_restaurant_dto.dart';
 import 'package:resto/feature/resto/data/response/local/restaurant/local_restaurant_dto.dart';
 import 'package:resto/feature/resto/data/service/database/dao/favorite_restaurant_dao.dart';
@@ -21,6 +22,8 @@ abstract class RestaurantLocalDataSource {
   Future<String> removeFavoriteRestaurant(Restaurant restaurant);
 
   Future<bool> isRestaurantFavorite(String restaurantId);
+
+  Future<Restaurant> getRandomRestaurant();
 }
 
 class RestaurantLocalDataSourceImpl implements RestaurantLocalDataSource {
@@ -87,5 +90,14 @@ class RestaurantLocalDataSourceImpl implements RestaurantLocalDataSource {
   @override
   Future<bool> isRestaurantFavorite(String restaurantId) async {
     return await favoriteRestaurantDao.isRestaurantFavorite(restaurantId);
+  }
+
+  @override
+  Future<Restaurant> getRandomRestaurant() async {
+    final localJson = json.decode(await getJson());
+    final dto = LocalRestaurantDto.fromJson(localJson);
+    final length = dto.restaurants.length;
+
+    return dto.restaurants[getRandom(length)];
   }
 }

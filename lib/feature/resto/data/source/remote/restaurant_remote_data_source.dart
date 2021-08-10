@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:resto/core/error/exceptions.dart';
 import 'package:resto/core/error/failures.dart';
+import 'package:resto/core/utils/random_util.dart';
 import 'package:resto/feature/resto/data/response/remote/restaurant/detail_restaurant_dto.dart';
 import 'package:resto/feature/resto/data/response/remote/restaurant/restaurant_dto.dart';
 import 'package:resto/feature/resto/data/service/api/restaurant_service.dart';
@@ -14,6 +15,8 @@ abstract class RestaurantRemoteDataSource {
   Future<DetailRestaurant> getDetailRestaurant(String restaurantId);
 
   Future<List<Restaurant>> searchRestaurant(String keyword);
+
+  Future<Restaurant> getRandomRestaurant();
 }
 
 class RestaurantRemoteDataSourceImpl implements RestaurantRemoteDataSource {
@@ -49,7 +52,19 @@ class RestaurantRemoteDataSourceImpl implements RestaurantRemoteDataSource {
       final response = await restaurantService.searchRestaurant(keyword);
       final dto = RestaurantDto.fromJson(jsonDecode(response));
       return dto.restaurants;
-    }on ServerException {
+    } on ServerException {
+      throw ServerFailure();
+    }
+  }
+
+  @override
+  Future<Restaurant> getRandomRestaurant() async {
+    try {
+      final response = await restaurantService.getRestaurants();
+      final dto = RestaurantDto.fromJson(jsonDecode(response));
+      final length = dto.restaurants.length;
+      return dto.restaurants[getRandom(length)];
+    } on ServerException {
       throw ServerFailure();
     }
   }

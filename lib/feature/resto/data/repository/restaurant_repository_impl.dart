@@ -80,4 +80,13 @@ class RestaurantRepositoryImpl implements RestaurantRepository {
       throw CacheFailure;
     }
   }
+
+  @override
+  Future<Restaurant> getRandomRestaurant() async {
+    try {
+      return await remoteDataSource.getRandomRestaurant();
+    } on ServerFailure {
+      return await localDataSource.getRandomRestaurant();
+    }
+  }
 }
