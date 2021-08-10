@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:resto/core/route/main_route.dart';
+import 'package:resto/feature/resto/data/service/notification/notification_helper.dart';
 import 'package:resto/feature/resto/presentation/pages/favorite/favorite_restaurant_page.dart';
 import 'package:resto/feature/resto/presentation/pages/setting/setting_page.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -18,6 +20,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var _selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    notificationHelper.configureSelectNotificationSubject(DetailRestaurantPageRoute);
+  }
 
   @override
   Widget build(BuildContext context) {
