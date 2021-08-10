@@ -13,4 +13,6 @@ abstract class RestaurantRepository {
   Future<String> setFavoriteRestaurant(Restaurant restaurant);
 
   Future<String> removeFavoriteRestaurant(Restaurant restaurant);
+
+  Future<Restaurant> getRandomRestaurant();
 }
