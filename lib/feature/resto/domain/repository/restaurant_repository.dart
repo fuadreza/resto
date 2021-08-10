@@ -15,4 +15,6 @@ abstract class RestaurantRepository {
   Future<String> removeFavoriteRestaurant(Restaurant restaurant);
 
   Future<Restaurant> getRandomRestaurant();
+
+  Future<bool> setScheduleNotification(bool state);
 }
