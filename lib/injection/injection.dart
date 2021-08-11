@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:resto/core/network/base_api_client.dart';
 import 'package:resto/feature/resto/data/repository/restaurant_repository_impl.dart';
 import 'package:resto/feature/resto/data/service/api/restaurant_service.dart';
+import 'package:resto/feature/resto/data/service/background_service.dart';
 import 'package:resto/feature/resto/data/service/database/dao/favorite_restaurant_dao.dart';
 import 'package:resto/feature/resto/data/service/database/database_helper.dart';
 import 'package:resto/feature/resto/data/source/local/restaurant_local_data_source.dart';
@@ -14,10 +15,12 @@ import 'package:resto/feature/resto/domain/usecase/get_restaurants_use_case.dart
 import 'package:resto/feature/resto/domain/usecase/remove_favorite_restaurant_use_case.dart';
 import 'package:resto/feature/resto/domain/usecase/search_restaurant_use_case.dart';
 import 'package:resto/feature/resto/domain/usecase/set_favorite_restaurant_use_case.dart';
+import 'package:resto/feature/resto/domain/usecase/set_schedule_notification_use_case.dart';
 import 'package:resto/feature/resto/presentation/bloc/detail/detail_restaurant_cubit.dart';
 import 'package:resto/feature/resto/presentation/bloc/favorite/favorite_restaurant_cubit.dart';
 import 'package:resto/feature/resto/presentation/bloc/restaurant/restaurant_cubit.dart';
 import 'package:resto/feature/resto/presentation/bloc/search/search_restaurant_cubit.dart';
+import 'package:resto/feature/resto/presentation/bloc/setting/setting_cubit.dart';
 
 final di = GetIt.instance;
 
@@ -45,6 +48,9 @@ Future<void> init() async {
     () => FavoriteRestaurantCubit(
       getFavoriteRestaurantsUseCase: di(),
     ),
+  );
+  di.registerFactory(
+    () => SettingCubit(setScheduleNotificationUseCase: di()),
   );
 
   // Use cases
@@ -78,6 +84,11 @@ Future<void> init() async {
       repository: di(),
     ),
   );
+  di.registerLazySingleton(
+    () => SetScheduleNotificationUseCase(
+      repository: di(),
+    ),
+  );
 
   // Repositories
   di.registerLazySingleton<RestaurantRepository>(
@@ -92,6 +103,7 @@ Future<void> init() async {
   di.registerLazySingleton<RestaurantLocalDataSource>(
     () => RestaurantLocalDataSourceImpl(
       favoriteRestaurantDao: di(),
+      backgroundService: di(),
     ),
   );
 
@@ -124,6 +136,9 @@ Future<void> init() async {
   );
   di.registerLazySingleton<DatabaseHelper>(
     () => DatabaseHelper(),
+  );
+  di.registerLazySingleton<BackgroundService>(
+    () => BackgroundService(),
   );
 
   //! External
