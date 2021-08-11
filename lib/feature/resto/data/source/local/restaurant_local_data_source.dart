@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:android_alarm_manager/android_alarm_manager.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:resto/core/utils/date_time_helper.dart';
 import 'package:resto/core/utils/random_util.dart';
 import 'package:resto/feature/resto/data/response/local/restaurant/local_detail_restaurant_dto.dart';
 import 'package:resto/feature/resto/data/response/local/restaurant/local_restaurant_dto.dart';
+import 'package:resto/feature/resto/data/service/background_service.dart';
 import 'package:resto/feature/resto/data/service/database/dao/favorite_restaurant_dao.dart';
 import 'package:resto/feature/resto/domain/entity/restaurant/detail_restaurant.dart';
 import 'package:resto/feature/resto/domain/entity/restaurant/restaurant.dart';
@@ -24,12 +27,17 @@ abstract class RestaurantLocalDataSource {
   Future<bool> isRestaurantFavorite(String restaurantId);
 
   Future<Restaurant> getRandomRestaurant();
+
+  Future<bool> setScheduleNotification(Restaurant restaurant);
+
+  Future<bool> removeScheduleNotification();
 }
 
 class RestaurantLocalDataSourceImpl implements RestaurantLocalDataSource {
   final FavoriteRestaurantDao favoriteRestaurantDao;
+  final BackgroundService backgroundService;
 
-  RestaurantLocalDataSourceImpl({required this.favoriteRestaurantDao});
+  RestaurantLocalDataSourceImpl({required this.favoriteRestaurantDao, required this.backgroundService});
 
   @override
   Future<List<Restaurant>> getRestaurants() async {
@@ -99,5 +107,24 @@ class RestaurantLocalDataSourceImpl implements RestaurantLocalDataSource {
     final length = dto.restaurants.length;
 
     return dto.restaurants[getRandom(length)];
+  }
+
+  @override
+  Future<bool> setScheduleNotification(Restaurant restaurant) async {
+    return await AndroidAlarmManager.periodic(
+      Duration(minutes: 1),
+      1,
+      () {
+        BackgroundService.callback(restaurant);
+      },
+      startAt: DateTimeHelper.format(),
+      exact: true,
+      wakeup: true,
+    );
+  }
+
+  @override
+  Future<bool> removeScheduleNotification() async {
+    return await AndroidAlarmManager.cancel(1);
   }
 }
