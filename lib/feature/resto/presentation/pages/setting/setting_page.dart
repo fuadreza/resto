@@ -60,7 +60,7 @@ class _SettingPageState extends State<SettingPage> {
                                 ),
                               ),
                               Text(
-                                'Enable notification',
+                                'Get recommendation of random restaurant',
                               ),
                             ],
                           ),
