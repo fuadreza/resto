@@ -50,7 +50,9 @@ Future<void> init() async {
     ),
   );
   di.registerFactory(
-    () => SettingCubit(setScheduleNotificationUseCase: di()),
+    () => SettingCubit(
+      setScheduleNotificationUseCase: di(),
+    ),
   );
 
   // Use cases
