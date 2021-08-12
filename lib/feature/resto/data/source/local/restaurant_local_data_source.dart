@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:android_alarm_manager/android_alarm_manager.dart';
+
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:resto/core/utils/date_time_helper.dart';
 import 'package:resto/core/utils/random_util.dart';
 import 'package:resto/feature/resto/data/response/local/restaurant/local_detail_restaurant_dto.dart';
 import 'package:resto/feature/resto/data/response/local/restaurant/local_restaurant_dto.dart';
@@ -10,6 +10,9 @@ import 'package:resto/feature/resto/data/service/background_service.dart';
 import 'package:resto/feature/resto/data/service/database/dao/favorite_restaurant_dao.dart';
 import 'package:resto/feature/resto/domain/entity/restaurant/detail_restaurant.dart';
 import 'package:resto/feature/resto/domain/entity/restaurant/restaurant.dart';
+
+import '../../../../../core/utils/date_time_helper.dart';
+import '../../service/background_service.dart';
 
 abstract class RestaurantLocalDataSource {
   Future<List<Restaurant>> getRestaurants();
@@ -28,7 +31,7 @@ abstract class RestaurantLocalDataSource {
 
   Future<Restaurant> getRandomRestaurant();
 
-  Future<bool> setScheduleNotification(Restaurant restaurant);
+  Future<bool> setScheduleNotification();
 
   Future<bool> removeScheduleNotification();
 }
@@ -110,13 +113,11 @@ class RestaurantLocalDataSourceImpl implements RestaurantLocalDataSource {
   }
 
   @override
-  Future<bool> setScheduleNotification(Restaurant restaurant) async {
+  Future<bool> setScheduleNotification() async {
     return await AndroidAlarmManager.periodic(
-      Duration(minutes: 1),
+      const Duration(hours: 24),
       1,
-      () {
-        BackgroundService.callback(restaurant);
-      },
+      BackgroundService.callback,
       startAt: DateTimeHelper.format(),
       exact: true,
       wakeup: true,

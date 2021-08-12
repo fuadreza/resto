@@ -93,8 +93,7 @@ class RestaurantRepositoryImpl implements RestaurantRepository {
   @override
   Future<bool> setScheduleNotification(bool state) async {
     if (state) {
-      final restaurant = await getRandomRestaurant();
-      return await localDataSource.setScheduleNotification(restaurant);
+      return await localDataSource.setScheduleNotification();
     } else {
       return await localDataSource.removeScheduleNotification();
     }

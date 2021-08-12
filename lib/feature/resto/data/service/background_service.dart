@@ -1,8 +1,12 @@
+import 'dart:convert';
 import 'dart:isolate';
 import 'dart:ui';
 
+import 'package:flutter/services.dart';
 import 'package:resto/feature/resto/data/service/notification/notification_helper.dart';
-import 'package:resto/feature/resto/domain/entity/restaurant/restaurant.dart';
+
+import '../../../../core/utils/random_util.dart';
+import '../response/local/restaurant/local_restaurant_dto.dart';
 
 final ReceivePort port = ReceivePort();
 
@@ -24,7 +28,13 @@ class BackgroundService {
     );
   }
 
-  static Future<void> callback(Restaurant restaurant) async {
+  static Future<void> callback() async {
+    final localJson = json.decode(await rootBundle.loadString('assets/local_restaurant.json'));
+    final dto = LocalRestaurantDto.fromJson(localJson);
+    final length = dto.restaurants.length;
+
+    final restaurant = dto.restaurants[getRandom(length)];
+
     await notificationHelper.showNotification(flutterLocalNotificationsPlugin, restaurant);
 
     _uiSendPort ??= IsolateNameServer.lookupPortByName(_isolateName);
