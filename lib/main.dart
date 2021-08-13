@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:android_alarm_manager/android_alarm_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:resto/core/route/main_route.dart' as router;

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:android_alarm_manager/android_alarm_manager.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:resto/core/utils/random_util.dart';
 import 'package:resto/feature/resto/data/response/local/restaurant/local_detail_restaurant_dto.dart';
